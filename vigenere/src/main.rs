@@ -8,6 +8,10 @@ fn main() {
     // Affichage du message original et du message chiffré
     println!("Message original : {}", message);
     println!("Message chiffré : {}", chiffre);
+    // Déchiffrement du message chiffré avec la même clé
+    let dechiffre = vigenere_decode(&chiffre, clef);
+    // Affichage du message déchiffré
+    println!("Message déchiffré : {}", dechiffre);
 }
 
 /// Chiffre un texte avec le chiffre de Vigenère.
@@ -41,6 +45,37 @@ fn vigenere(text: &str, key: &str) -> String {
         .collect()
 }
 
+/// Déchiffre un texte chiffré avec le chiffre de Vigenère.
+///
+/// # Arguments
+/// * `text` - Le texte chiffré.
+/// * `key` - La clé de chiffrement (lettres uniquement).
+///
+/// # Retour
+/// Le texte déchiffré.
+fn vigenere_decode(text: &str, key: &str) -> String {
+    // Met la clé en majuscules pour simplifier le calcul
+    let key = key.to_ascii_uppercase();
+    // Crée un itérateur cyclique sur la clé pour répéter la clé si besoin
+    let mut key_iter = key.chars().cycle();
+    text.chars()
+        .map(|c| {
+            // Vérifie si le caractère est une lettre
+            if c.is_ascii_alphabetic() {
+                // Détermine la base selon la casse (minuscule ou majuscule)
+                let base = if c.is_ascii_lowercase() { b'a' } else { b'A' };
+                // Calcule le décalage à partir de la lettre de la clé
+                let k = key_iter.next().unwrap() as u8 - b'A';
+                // Applique le déchiffrement Vigenère
+                (((26 + c as u8 - base - k) % 26) + base) as char
+            } else {
+                // Les caractères non alphabétiques restent inchangés
+                c
+            }
+        })
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -51,5 +86,13 @@ mod tests {
         let clef = "CLEF";
         let chiffre = vigenere(message, clef);
         assert_eq!(chiffre, "Dzroqfv, rqyhj!");
+    }
+
+    #[test]
+    fn test_vigenere_decode() {
+        let chiffre = "Dzroqfv, rqyhj!";
+        let clef = "CLEF";
+        let dechiffre = vigenere_decode(chiffre, clef);
+        assert_eq!(dechiffre, "Bonjour, monde!");
     }
 }
