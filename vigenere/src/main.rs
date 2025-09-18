@@ -14,14 +14,14 @@ fn main() {
     println!("Message déchiffré : {}", dechiffre);
 }
 
-/// Chiffre un texte avec le chiffre de Vigenère.
-///
-/// # Arguments
-/// * `text` - Le texte à chiffrer.
-/// * `key` - La clé de chiffrement (lettres uniquement).
-///
-/// # Retour
-/// Le texte chiffré.
+// Chiffre un texte avec le chiffre de Vigenère.
+//
+// # Arguments
+// * `text` - Le texte à chiffrer.
+// * `key` - La clé de chiffrement (lettres uniquement).
+//
+// # Retour
+// Le texte chiffré.
 fn vigenere(text: &str, key: &str) -> String {
     // Met la clé en majuscules pour simplifier le calcul
     let key = key.to_ascii_uppercase();
@@ -45,14 +45,14 @@ fn vigenere(text: &str, key: &str) -> String {
         .collect()
 }
 
-/// Déchiffre un texte chiffré avec le chiffre de Vigenère.
-///
-/// # Arguments
-/// * `text` - Le texte chiffré.
-/// * `key` - La clé de chiffrement (lettres uniquement).
-///
-/// # Retour
-/// Le texte déchiffré.
+// Déchiffre un texte chiffré avec le chiffre de Vigenère.
+//
+// # Arguments
+// * `text` - Le texte chiffré.
+// * `key` - La clé de chiffrement (lettres uniquement).
+//
+// # Retour
+// Le texte déchiffré.
 fn vigenere_decode(text: &str, key: &str) -> String {
     // Met la clé en majuscules pour simplifier le calcul
     let key = key.to_ascii_uppercase();

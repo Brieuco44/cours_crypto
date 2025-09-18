@@ -15,7 +15,7 @@ fn main() {
 //
 // # Retour
 // Une chaîne de caractères transformée selon l'algorithme de César.
-fn cesar(text: &str, shift: u8, cypher: bool) -> String {
+fn cesar(text: &str, key: u8, cypher: bool) -> String {
     text.chars()
         .map(|c| {
             // Vérifie si le caractère est une lettre de l'alphabet
@@ -23,12 +23,12 @@ fn cesar(text: &str, shift: u8, cypher: bool) -> String {
                 // Détermine la base selon la casse (minuscule ou majuscule)
                 let base = if c.is_ascii_lowercase() { b'a' } else { b'A' };
                 // Applique le décalage pour chiffrer ou déchiffrer
-                let shifted = if cypher {
-                    ((c as u8 - base + shift) % 26) + base
+                let retour = if cypher {
+                    ((c as u8 - base + key) % 26) + base
                 } else {
-                    ((c as u8 - base + 26 - shift) % 26) + base
+                    ((c as u8 - base + 26 - key) % 26) + base
                 };
-                shifted as char
+                retour as char
             } else {
                 // Les caractères non alphabétiques restent inchangés
                 c
